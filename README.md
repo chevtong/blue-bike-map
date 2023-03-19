@@ -1,7 +1,8 @@
 # Blue Bike App
 
 **Description**
-This app shows you the amount of available BlueBike in Ghent Dampoort and Ghent Sint Pieters stations and a list of parking slots with more than 50% availability. 
+
+This app shows you the amount of available BlueBike in Ghent Dampoort and Ghent Sint Pieters stations and a list of parking slots with more than 50% availability in Ghent. 
 
 ### Bikes Screen 
 - Amount of available and total Bluebike in Ghent Dampoort and Ghent Sint Pieters stations.
@@ -9,8 +10,8 @@ This app shows you the amount of available BlueBike in Ghent Dampoort and Ghent 
 
 ### Parkings Screen 
 - List out the parking stations with more than 50% available spots.
-- List the parking station in ascending order. 
-- Tap the station card to open the Google Maps URL.
+- Sort the parking stations in ascending order. 
+- Tap the station's card to open the Google Maps URL.
 
 
 ---
