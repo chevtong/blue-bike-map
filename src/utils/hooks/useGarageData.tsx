@@ -19,7 +19,7 @@ export const useGarageData = (): {
 } => {
   const [data, setData] = useState<CompleteGaragesProps[] | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string | undefined>();
 
   useEffect(() => {
     if (!data && !isLoading && !error) {

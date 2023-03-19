@@ -14,7 +14,7 @@ export const useBikeData = (): {
 } => {
   const [data, setData] = useState<BikeProps[] | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string | undefined>();
 
   useEffect(() => {
     if (!data && !isLoading && !error) {

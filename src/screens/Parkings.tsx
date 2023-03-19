@@ -23,7 +23,7 @@ export const Parkings = () => {
               <ParkingCard
                 name={item.name}
                 coordinates={item.coordinates}
-                availablityPercenatge={item.availablePercentage}
+                availablityPercentage={item.availablePercentage}
               />
             );
           }}

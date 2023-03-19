@@ -7,15 +7,15 @@ import {Card} from './Card';
 
 interface ParkingCardProps {
   /**
-   * Name of the parking garage
+   * Name of the parking station
    */
   name: string;
   /**
    * Number of availability in percentage
    */
-  availablityPercenatge: number;
+  availablityPercentage: number;
   /**
-   * Coordinate of the garage
+   * Coordinates of the parking station
    */
   coordinates: number[];
 }
@@ -23,25 +23,25 @@ interface ParkingCardProps {
 export const ParkingCard = ({
   name,
   coordinates,
-  availablityPercenatge,
+  availablityPercentage,
 }: ParkingCardProps) => {
-  const openLocation = (latitude: number, longitude: number) => {
+  const openLocation = (stationCoordinate: number[]) => {
     openMap({
       provider: 'google',
-      latitude: latitude,
-      longitude: longitude,
+      latitude: stationCoordinate[0],
+      longitude: stationCoordinate[1],
     });
   };
 
   return (
     <Card
-      onPress={() => openLocation(coordinates[0], coordinates[1])}
+      onPress={() => openLocation(coordinates)}
       title={name}
       accessibilityHint="Press to open in Google Maps.">
       <View style={styles.display}>
         <Icon name={'local-parking'} size={16} color={colors.grey} />
         <Text style={styles.text}>
-          Availability: {Math.trunc(availablityPercenatge)}%
+          Availability: {Math.trunc(availablityPercentage)}%
         </Text>
       </View>
     </Card>
