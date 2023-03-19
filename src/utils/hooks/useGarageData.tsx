@@ -21,27 +21,59 @@ export const useGarageData = (): {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  /**
-   * Function to remove garages which have <50% availability and sort out the array in ascending order according to the availability.   * @param responseData : GaragesProps[]
-   * @returns A complete garages array: CompleteGaragesProps[]
-   */
-  const removeLowCapacityGarages = (
-    responseData: GaragesProps[],
-  ): CompleteGaragesProps[] => {
-    return responseData
-      .map(garage => ({
-        availablePercentage:
-          (garage.availableCapacity / garage.totalCapacity) * 100,
-        ...garage,
-      }))
-      .filter(garage => {
-        return garage.availablePercentage > 50;
-      })
-      .sort((a, b) => b.availablePercentage - a.availablePercentage);
-  };
-
   useEffect(() => {
     if (!data && !isLoading && !error) {
+      /**
+       * Function to remove garages which have <50% availability and sort out the array in ascending order according to the availability.   * @param responseData : GaragesProps[]
+       * @returns A complete garages array: CompleteGaragesProps[]
+       */
+      const removeLowCapacityGarages = (
+        responseData: GaragesProps[],
+      ): CompleteGaragesProps[] => {
+        return responseData
+          .map(garage => ({
+            availablePercentage:
+              (garage.availableCapacity / garage.totalCapacity) * 100,
+            ...garage,
+          }))
+          .filter(garage => {
+            return garage.availablePercentage > 50;
+          })
+          .sort((a, b) => b.availablePercentage - a.availablePercentage);
+      };
+
+      /**
+       * Function to reform API response to our desireable structure.
+       *  1. Extract and rename the useful data
+       *  2. Use the removeLowCapacityGarages() to remove low availability garages
+       *  3. Return the data
+       * @param responseData Original API repsonse
+       * @returns Ready to use parking data
+       */
+      const reformGarageData = (
+        responseData: GaragesData[],
+      ): CompleteGaragesProps[] => {
+        const reformedData = responseData
+          .map((record: {fields: GaragesData['fields']}) => record.fields)
+          .map(
+            (field: {
+              name: GarageFields['name'];
+              availablecapacity: GarageFields['availablecapacity'];
+              totalcapacity: GarageFields['totalcapacity'];
+              location: GarageFields['location'];
+              id: GarageFields['id'];
+            }) => ({
+              name: field.name,
+              availableCapacity: field.availablecapacity,
+              totalCapacity: field.totalcapacity,
+              coordinates: field.location,
+              id: field.id,
+            }),
+          );
+
+        return removeLowCapacityGarages(reformedData);
+      };
+
       setIsLoading(true);
 
       axios
@@ -53,28 +85,7 @@ export const useGarageData = (): {
           },
         })
         .then(res => {
-          // 1. Extract and rename the useful data
-          // 2. Use the removeLowCapacityGarages() to remove low availability garages
-          // 3. Return the data
-          const filteredData = res.data.records
-            .map((record: {fields: GaragesData['fields']}) => record.fields)
-            .map(
-              (field: {
-                name: GarageFields['name'];
-                availablecapacity: GarageFields['availablecapacity'];
-                totalcapacity: GarageFields['totalcapacity'];
-                location: GarageFields['location'];
-                id: GarageFields['id'];
-              }) => ({
-                name: field.name,
-                availableCapacity: field.availablecapacity,
-                totalCapacity: field.totalcapacity,
-                coordinates: field.location,
-                id: field.id,
-              }),
-            );
-
-          setData(removeLowCapacityGarages(filteredData));
+          setData(reformGarageData(res.data.records));
         })
         .catch(err => {
           console.error(err);

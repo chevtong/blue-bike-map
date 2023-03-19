@@ -20,7 +20,7 @@ export const useBikeData = (): {
     if (!data && !isLoading && !error) {
       setIsLoading(true);
 
-      // 2 API get request
+      // Run 2 API get requests
       axios
         .all([
           axios.get(API_URL, {
