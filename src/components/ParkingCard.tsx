@@ -5,7 +5,7 @@ import {colors} from '../utils/colors';
 import openMap from 'react-native-open-maps';
 import {Card} from './Card';
 
-interface GarageCardProps {
+interface ParkingCardProps {
   /**
    * Name of the parking garage
    */
@@ -20,11 +20,11 @@ interface GarageCardProps {
   coordinates: number[];
 }
 
-export const GarageCard = ({
+export const ParkingCard = ({
   name,
   coordinates,
   availablityPercenatge,
-}: GarageCardProps) => {
+}: ParkingCardProps) => {
   const openLocation = (latitude: number, longitude: number) => {
     openMap({
       provider: 'google',

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Text, View, FlatList, StyleSheet} from 'react-native';
-import {GarageCard} from '../components/GarageCard';
+import {ParkingCard} from '../components/ParkingCard';
 import {colors} from '../utils/colors';
 import {ActivityIndicator} from 'react-native';
 import {useGarageData} from '../utils/hooks/useGarageData';
@@ -20,7 +20,7 @@ export const Parkings = () => {
           data={data}
           renderItem={({item}) => {
             return (
-              <GarageCard
+              <ParkingCard
                 name={item.name}
                 coordinates={item.coordinates}
                 availablityPercenatge={item.availablePercentage}
